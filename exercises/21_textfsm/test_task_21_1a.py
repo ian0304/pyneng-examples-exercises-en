@@ -66,9 +66,7 @@ def test_function_return_value():
     assert (
         type(return_value) == list
     ), f"The function should return a list, instead it returns a {type(return_value).__name__}"
-    assert (
-        return_value == correct_return_value
-    ), "Function returns wrong value"
+    assert correct_return_value == return_value, "Function returns wrong value"
 
 
 def test_function_return_value_different_args():
@@ -78,7 +76,6 @@ def test_function_return_value_different_args():
     correct_return_value = [
         {
             "hostname": "R1_LONDON",
-            "uptime": "1 day, 15 hours, 32 minutes",
             "version": "15.3(2)S1",
         }
     ]
@@ -92,6 +89,4 @@ def test_function_return_value_different_args():
     assert (
         type(return_value) == list
     ), f"The function should return a list, instead it returns a {type(return_value).__name__}"
-    assert (
-        return_value == correct_return_value
-    ), "Function returns wrong value"
+    assert correct_return_value == return_value, "Function returns wrong value"

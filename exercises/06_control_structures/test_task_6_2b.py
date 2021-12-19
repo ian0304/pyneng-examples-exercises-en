@@ -32,9 +32,7 @@ def test_task_correct_ip(capsys, monkeypatch, ip_add, ip_type):
     assert (
         out
     ), "Nothing is printed to stdout. It is necessary not only to get the correct result, but also to print it to the stdout using print"
-    assert (
-        correct_stdout in out.strip()
-    ), "Wrong output is printed to stdout"
+    assert correct_stdout in out.strip(), "Wrong output is printed to stdout"
 
 
 def count_calls(func):
@@ -44,12 +42,14 @@ def count_calls(func):
         wrapper.total_calls += 1
         result = func(*args, **kwargs)
         return result
+
     wrapper.total_calls = 0
     return wrapper
 
 
 def monkey_input_ip(ip_add):
     __tracebackhide__ = True
+
     @count_calls
     def inner(prompt):
         __tracebackhide__ = True
@@ -57,18 +57,19 @@ def monkey_input_ip(ip_add):
             return ip_add
         elif inner.total_calls == 2:
             return "10.1.1.1"
+
     return inner
 
 
 @pytest.mark.parametrize(
     "ip_add,ip_type",
     [
-        ("10.1.1", "invalid"),
-        ("10.a.2.a", "invalid"),
-        ("10.1.1.1.1", "invalid"),
-        ("10.1.1.", "invalid"),
-        ("300.1.1.1", "invalid"),
-        ("30,1.1.1.1", "invalid"),
+        ("10.1.1", "invalid ip address"),
+        ("10.a.2.a", "invalid ip address"),
+        ("10.1.1.1.1", "invalid ip address"),
+        ("10.1.1.", "invalid ip address"),
+        ("300.1.1.1", "invalid ip address"),
+        ("30,1.1.1.1", "invalid ip address"),
     ],
 )
 def test_task_wrong_ip(capsys, monkeypatch, ip_add, ip_type):
@@ -78,10 +79,8 @@ def test_task_wrong_ip(capsys, monkeypatch, ip_add, ip_type):
     import task_6_2b
 
     out, err = capsys.readouterr()
-    correct_stdout = ip_type
+    correct_stdout = ip_type + "\nunicast"
     assert (
         out
     ), "Nothing is printed to stdout. It is necessary not only to get the correct result, but also to print it to the stdout using print"
-    assert (
-        correct_stdout in out.strip().lower()
-    ), "Wrong output is printed to stdout"
+    assert correct_stdout == out.strip().lower(), "Wrong output is printed to stdout"

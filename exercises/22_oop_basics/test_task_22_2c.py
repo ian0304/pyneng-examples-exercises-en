@@ -5,7 +5,11 @@ import sys
 
 sys.path.append("..")
 
-from pyneng_common_functions import check_class_exists, check_attr_or_method, strip_empty_lines
+from pyneng_common_functions import (
+    check_class_exists,
+    check_attr_or_method,
+    strip_empty_lines,
+)
 
 # Checking that the test is called via pytest ... and not python ...
 from _pytest.assertion.rewrite import AssertionRewritingHook
@@ -46,8 +50,8 @@ def test_send_config_commands_wrong_commands(
     r1 = task_22_2c.CiscoTelnet(**first_router_from_devices_yaml)
 
     return_value = r1.send_config_commands(command, strict=False)
-    out, err = capsys.readouterr()
-    assert error in out, "send_config_commands method does not print error message"
+    stdout, err = capsys.readouterr()
+    assert error in stdout, "send_config_commands method does not print error message"
 
     with pytest.raises(ValueError) as excinfo:
         return_value = r1.send_config_commands(command, strict=True)
